@@ -3,6 +3,9 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Task11Bot.Configuration;
+using Task11Bot.Controllers;
+using Task11Bot.Services;
 using Task11Bot.VoiceTexterBot;
 using Telegram.Bot;
 
@@ -28,10 +31,26 @@ namespace Task11Bot
 
         static void ConfigureServices(IServiceCollection services)
         {
-            // Регистрируем объект TelegramBotClient c токеном подключения
-            services.AddSingleton<ITelegramBotClient>(provider => new TelegramBotClient("8456289298:AAH73shDlG0HOzYlJ2DW1baiGPJJEnILnKU"));
-            // Регистрируем постоянно активный сервис бота
+            AppSettings appSettings = BuildAppSettings();
+            services.AddSingleton(appSettings);
+
+            services.AddSingleton<IStorage, MemoryStorage>();
+
+            // Подключаем контроллеры сообщений и кнопок
+            services.AddTransient<DefaultMessageController>();
+            services.AddTransient<TextMessageController>();
+            services.AddTransient<InlineKeyboardController>();
+
+            services.AddSingleton<ITelegramBotClient>(provider => new TelegramBotClient(appSettings.BotToken));
             services.AddHostedService<Bot>();
+        }
+
+        static AppSettings BuildAppSettings()
+        {
+            return new AppSettings()
+            {
+                BotToken = "8456289298:AAH73shDlG0HOzYlJ2DW1baiGPJJEnILnKU"
+            };
         }
 
     }

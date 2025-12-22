@@ -4,6 +4,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using Task11Bot.Utilities;
 
 namespace Task11Bot.Controllers
 {
@@ -43,7 +44,10 @@ namespace Task11Bot.Controllers
 
                 default:
                     string userChoseCode = _memoryStorage.GetSession(message.Chat.Id).UserChose; // Здесь получим язык из сессии пользователя
-                    await _telegramClient.SendMessage(message.Chat.Id, $"Пользователь выбрал - {userChoseCode}", cancellationToken: ct);
+                    await _telegramClient.SendMessage(message.Chat.Id, $"Результат - {WorkWithString.StringParseFromUserChose("123", userChoseCode)}", cancellationToken: ct);
+
+                    //WorkWithString.StringParseFromUserChose("123", userChoseCode);
+
                     //await _telegramClient.SendMessage(message.Chat.Id, "Отправте строку для подсчета символов в ней.", cancellationToken: ct);
                     break;
             }

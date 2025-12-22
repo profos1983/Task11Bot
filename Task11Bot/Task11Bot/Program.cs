@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Task11Bot.Configuration;
 using Task11Bot.Controllers;
 using Task11Bot.Services;
-using Task11Bot.VoiceTexterBot;
 using Telegram.Bot;
 
 namespace Task11Bot

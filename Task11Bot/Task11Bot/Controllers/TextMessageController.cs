@@ -44,11 +44,17 @@ namespace Task11Bot.Controllers
 
                 default:
                     string userChoseCode = _memoryStorage.GetSession(message.Chat.Id).UserChose; // Здесь получим язык из сессии пользователя
-                    await _telegramClient.SendMessage(message.Chat.Id, $"Результат - {WorkWithString.StringParseFromUserChose("123", userChoseCode)}", cancellationToken: ct);
 
-                    //WorkWithString.StringParseFromUserChose("123", userChoseCode);
+                    //Обрабатывает введенный текст, в зависимости от выбора пользователя
+                    if (userChoseCode == "stringLenght")
+                    {
+                        await _telegramClient.SendMessage(message.Chat.Id, $"Количество символов в строке: {message.Text.Length}", cancellationToken: ct);
+                    }
+                    if (userChoseCode == "sumInt")
+                    {
+                        await _telegramClient.SendMessage(message.Chat.Id, $"Сумма введенных чисел через пробел: {WorkWithString.SumIntInString(message.Text)}", cancellationToken: ct);
+                    }
 
-                    //await _telegramClient.SendMessage(message.Chat.Id, "Отправте строку для подсчета символов в ней.", cancellationToken: ct);
                     break;
             }
         }

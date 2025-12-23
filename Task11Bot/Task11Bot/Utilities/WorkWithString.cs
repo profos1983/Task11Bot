@@ -42,8 +42,6 @@ namespace Task11Bot.Utilities
             {
                 return sum.ToString();
             }
-  
-
         }
         /// <summary>
         /// Метод, для удаление лишних пробелов из переданной строки, возвращает очищенную строку
